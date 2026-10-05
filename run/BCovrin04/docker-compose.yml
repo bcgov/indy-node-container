@@ -8,6 +8,7 @@ services:
       - "${INDY_NODE_PORT}:${INDY_NODE_PORT}"
       - "${INDY_CLIENT_PORT}:${INDY_CLIENT_PORT}"
     volumes:
+      - ../init_and_run.sh:/home/indy/init_and_run.sh:ro
       - ./etc_indy:/etc/indy
       - ./lib_indy:/var/lib/indy
       - ./log_indy:/var/log/indy
@@ -19,6 +20,10 @@ services:
       - INDY_NETWORK_NAME=${INDY_NETWORK_NAME}
       - INDY_NODE_NAME=${INDY_NODE_NAME}
       - CONTROLLER_CONTAINER_NAME=${INDY_NODE_NAME}-${CONTROLLER_CONTAINER_NAME}
+    ulimits:
+      nofile:
+        soft: 65536
+        hard: 65536
     logging:
         driver: "json-file"
         options:
