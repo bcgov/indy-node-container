@@ -23,6 +23,9 @@ jobs:
     name: Trivy Analysis of Indy Node Images
     runs-on: "ubuntu-20.04"
     needs: workflow_setup
+    permissions:
+      contents: read
+      security-events: write
     strategy:
       matrix:
         os_version: [ debian11, ubuntu20 ]
