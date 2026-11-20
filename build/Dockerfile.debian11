@@ -9,6 +9,10 @@ LABEL org.opencontainers.image.description="Debian 11 based image to run indy-no
 
 ENV DEBIAN_FRONTEND=noninteractive
 
+# Bullseye moved to the Debian archive after its regular mirrors stopped hosting it.
+RUN sed -i 's|deb.debian.org|archive.debian.org|g' /etc/apt/sources.list \
+    && printf '%s\n' 'Acquire::Check-Valid-Until "false";' > /etc/apt/apt.conf.d/99debian-archive
+
 # Install environment
 RUN apt-get update -y && apt-get upgrade -y && apt-get install -y \
     apt-transport-https \
